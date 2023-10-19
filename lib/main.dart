@@ -54,32 +54,91 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+//PAGE INCREMENTATION
+class IncrementPage extends StatefulWidget {
+  const IncrementPage({Key? key}) : super(key: key);
+
+  @override
+  _IncrementPageState createState() => _IncrementPageState();
+}
+
+//DECREMENTATION
+class DecrementPage extends StatefulWidget {
+  const DecrementPage({Key? key}) : super(key: key);
+
+  @override
+  _DecrementPage createState() => _DecrementPage();
+}
+
+class _DecrementPage extends State<DecrementPage> {
   int _counter = 0;
 
   void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  void _decrementCounter() {
     setState(() {
       _counter--;
     });
   }
 
-  void _resetCounter() {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text("Page de décrémentation")
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text("Compteur : $_counter"),
+            FloatingActionButton(
+                  onPressed: _incrementCounter,
+                  tooltip: "increment",
+                  //child: const Icon(Icons.remove),
+                  child: const Text("+1"),
+                ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _IncrementPageState extends State<IncrementPage> {
+  int _counter = 0;
+
+  void _incrementCounter() {
     setState(() {
-      _counter = 0;
+      _counter++;
     });
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text("Page d'incrémentation")
+        ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text("Compteur : $_counter"),
+            FloatingActionButton(
+                  onPressed: _incrementCounter,
+                  tooltip: "increment",
+                  //child: const Icon(Icons.remove),
+                  child: const Text("+1"),
+                ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _MyHomePageState extends State<MyHomePage>{ 
 
   @override
   Widget build(BuildContext context) {
@@ -121,33 +180,23 @@ class _MyHomePageState extends State<MyHomePage> {
             const Text(
               'Compteur: ',
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
             
              Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                FloatingActionButton(
-                  onPressed: _incrementCounter,
-                  tooltip: "increment",
-                  //child: const Icon(Icons.remove),
-                  child: const Text("+1"),
-                ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const IncrementPage()));
+                },
+                child:const Text('Incrémentation'),
+              ),
                 const SizedBox(width: 20), // Add some spacing
-                FloatingActionButton(
-                  onPressed: _decrementCounter,
-                  tooltip: "decrement",
-                  //child: const Icon(Icons.remove),
-                  child: const Text("-1"),
-                ),
-                const SizedBox(width: 20), // Add some spacing
-                FloatingActionButton(
-                  tooltip: "reset",
-                  onPressed: _resetCounter,
-                  child: const Icon(Icons.refresh),
-                ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const DecrementPage()));
+                },
+                child:const Text('Décrémentation'),
+              ),
               ],
           ),
           ],
